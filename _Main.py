@@ -24,11 +24,13 @@ random.seed(seed if seed else random.randint(1, 99999999))
 
 close_board = False
 def board_thread():
-    global screen
+    global screen, win
     
     py.init()
-    screen = py.display.set_mode((BOARD_SIZE, BOARD_SIZE))
-    py.display.set_caption('Chess 2')
+    win = py.Window('Chess but Awesome', size=(BOARD_SIZE, BOARD_SIZE))
+    win.always_on_top = True
+    win.focus()
+    screen = win.get_surface()
     
     base_dir = Path(__file__).resolve().parent
     image_path = base_dir / 'images'
@@ -93,7 +95,7 @@ def board_thread():
                 tile = py.transform.scale(tile, (BOARD_SIZE, BOARD_SIZE))
                 screen.blit(tile, (0, 0))
                 
-            py.display.flip()
+            win.flip()
     
     except KeyboardInterrupt:
         py.quit()
