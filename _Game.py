@@ -251,13 +251,11 @@ class Game:
             'B': 'Bishop',
             'Q': 'Queen',
             'K': 'King',
-            
             'V': 'Viking',
-            
             'A': 'Rat',
             'C': 'Cheese',
             'S': 'Snake',
-            
+            'F': 'Forest',
             'H': 'Black Hole',
             'M': 'Mine',
         }
@@ -282,7 +280,7 @@ class Game:
         self.game_finished = False
         
         self.CHOICES = Choices.choices()
-        self.choice_frequency = 1
+        self.choice_frequency = 3
         self.choice_count = 3
         self.active_choices = []
         self.choice_cooldown = 0

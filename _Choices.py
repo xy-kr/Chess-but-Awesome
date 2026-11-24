@@ -71,6 +71,11 @@ CHOICES = [
         length = 0
     ),
     Choice(
+        name = 'Bone Meal',
+        desc = 'A random unoccupied tile grows a forest. No piece can enter/cross this tile.',
+        length = 0
+    ),
+    Choice(
         name = 'Switcharoo',
         desc = 'Swaps two random pieces.',
         length = 0

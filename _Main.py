@@ -7,7 +7,7 @@ from pathlib import Path
 import _Game as Game
 
 BOARD_SIZE = 800
-PIECE_SIZE = 100
+PIECE_SIZE = BOARD_SIZE / 8
 
 # Initialise variables and board
 G = Game.Game()
@@ -330,6 +330,10 @@ while not G.game_finished:
                 case 'original sin':
                     pos = board.random_tile(1)[0]
                     board.add_piece('S', 'S', pos[0], pos[1])
+                
+                case 'bone meal':
+                    pos = board.random_tile(1)[0]
+                    board.add_piece('F', 'F', pos[0], pos[1])
                 
                 case 'switcharoo':
                     pieces = board.random_tile(n=2, count=2)
