@@ -202,7 +202,7 @@ while not G.game_finished:
                         
                     case 'from the grave':
                         piece = board.random_tile(1)[0]
-                        board.add_piece('B' if G.turn % 2 == 0 else 'W', 'Q', piece[0], piece[1])
+                        board.add_piece('B' if G.turn % 2 == 1 else 'W', 'Q', piece[0], piece[1])
                     
                     case 'impending doom':
                         for x in range(8):
@@ -211,7 +211,7 @@ while not G.game_finished:
                     
                     case 'summoning ritual':
                         piece = board.random_tile(1)[0]
-                        board.add_piece('B' if G.turn % 2 == 0 else 'W', 'Q', piece[0], piece[1])
+                        board.add_piece('B' if G.turn % 2 == 1 else 'W', 'Q', piece[0], piece[1])
                     
                     case 'free will':
                         G.choice_count -= 1
@@ -305,7 +305,7 @@ while not G.game_finished:
                     for i in board.random_tile(n=1, count=random.randint(2, 5)):
                         board.add_piece('M', 'M', i[0], i[1])
                 
-                case 'viking invasion':
+                case 'ragnarok':
                     while True:
                         pos = board.random_tile(n=2, count=1)[0]
                         piece = board.get_tile(pos[0], pos[1])
@@ -347,12 +347,22 @@ while not G.game_finished:
                     for piece in [piece1, piece2]:
                         board.add_piece(piece.colour, piece.type, piece.pos[0], piece.pos[1])
                 
+                case 'mind control':
+                    while True:
+                        pos = board.random_tile(2)[0]
+                        piece = board.get_tile(pos[0], pos[1])
+                        
+                        if piece.type != 'K' and piece.colour == ('B' if G.turn % 2 == 1 else 'W'):
+                            break
+                    
+                    piece.colour = 'B' if G.turn % 2 == 1 else 'W'
+                
                 case 'resistance v':
                     while True:
                         pieces = board.random_tile(n=2, count=2)
                         pieces = [board.get_tile(i[0], i[1]) for i in pieces]
                     
-                        if all([(piece.colour == 'W' if G.turn % 2 == 0 else 'B') for piece in pieces]):
+                        if all([(piece.colour == 'W' if G.turn % 2 == 1 else 'B') for piece in pieces]):
                             if all([(piece.type != 'K') for piece in pieces]):
                                 
                                 for piece in pieces:
@@ -414,14 +424,14 @@ while not G.game_finished:
                         for y in range(8):
                             piece = board.get_tile(x, y)
                                 
-                            if piece != None and piece.type == 'P' and piece.colour == 'W' if G.turn % 2 == 0 else 'B':
+                            if piece != None and piece.type == 'P' and piece.colour == 'W' if G.turn % 2 == 1 else 'B':
                                 pawns.append([x, y])
                     
                     for i in random.sample(pawns, 4):
                         board.remove_piece(i[0], i[1])
                     
                     for i in random.sample(pawns, 1):
-                        board.add_piece('W' if G.turn % 2 == 0 else 'B', 'Q', i[0], i[1])
+                        board.add_piece('W' if G.turn % 2 == 1 else 'B', 'Q', i[0], i[1])
                 
                 case 'hobbit tragedy':
                     for x in range(8):
@@ -466,7 +476,7 @@ while not G.game_finished:
                 case 'the roooooook':
                     pos = board.random_tile(1, 1)[0]
                     
-                    board.add_piece('W' if G.turn % 2 == 0 else 'B', 'R', pos[0], pos[1])
+                    board.add_piece('W' if G.turn % 2 == 1 else 'B', 'R', pos[0], pos[1])
                 
                 case 'sacrifice the rook':
                     for x in range(8):
@@ -474,6 +484,14 @@ while not G.game_finished:
                             piece = board.get_tile(x, y)
                             
                             if piece != None and piece.type == 'R':
+                                board.remove_piece(x, y)
+                
+                case 'regicide':
+                    for x in range(8):
+                        for y in range(8):
+                            piece = board.get_tile(x, y)
+                            
+                            if piece != None and piece.type == 'Q':
                                 board.remove_piece(x, y)
                 
                 case '45-degree rotation':
@@ -528,7 +546,7 @@ while not G.game_finished:
                         for y in range(8):
                             piece = board.get_tile(x, y)
                             
-                            if piece != None and piece.colour == ('B' if G.turn % 2 == 0 else 'W') and piece.type == 'Q':
+                            if piece != None and piece.colour == ('B' if G.turn % 2 == 1 else 'W') and piece.type == 'Q':
                                 board.remove_piece(x, y)
                 
                 case 'nuke':
@@ -542,12 +560,12 @@ while not G.game_finished:
                     if random.random() < 0.5:
                         piece = board.random_tile(1)[0]
                         
-                        board.add_piece('W' if G.turn % 2 == 0 else 'B', 'R', piece[0], piece[1])
+                        board.add_piece('W' if G.turn % 2 == 1 else 'B', 'R', piece[0], piece[1])
                     
                     if random.random() < 0.25:
                         piece = board.random_tile(1)[0]
                         
-                        board.add_piece('B' if G.turn % 2 == 0 else 'W', 'R', piece[0], piece[1])
+                        board.add_piece('B' if G.turn % 2 == 1 else 'W', 'R', piece[0], piece[1])
                 
                 case 'earthquake':
                     for i in board.board:
@@ -581,7 +599,7 @@ while not G.game_finished:
                             piece = board.get_tile(x, y)
                             
                             if piece != None:
-                                if piece.colour == ('W' if G.turn % 2 == 0 else 'B') and piece.type == 'N':
+                                if piece.colour == ('W' if G.turn % 2 == 1 else 'B') and piece.type == 'N':
                                     knights.append(piece)
                     
                     if knights:
@@ -591,7 +609,7 @@ while not G.game_finished:
                         pos = board.random_tile(1, random.randint(3, 5))
                         
                         for i in pos:
-                            board.add_piece('W' if G.turn % 2 == 0 else 'B', 'P', i[0], i[1])
+                            board.add_piece('W' if G.turn % 2 == 1 else 'B', 'P', i[0], i[1])
                 
                 case 'free will':
                     G.choice_count += 1

@@ -157,6 +157,18 @@ class Board:
                                 if i[0] != 0 or i[1] != 0:
                                     self.remove_piece(piece.pos[0] + i[0], piece.pos[1] + i[1])
                     
+                    case 'necromancy':
+                        pos = self.random_tile(1)[0]
+                        self.add_piece('W' if self.game.turn == 1 else 'B', 'P', pos[0], pos[1])
+                    
+                    case 'vampirism':
+                        piece.type = destination.type
+                    
+                    case 'second chance':
+                        if random.randint(1, 2) == 1:
+                            pos = self.random_tile(1)[0]
+                            self.add_piece(destination.colour, destination.type, pos[0], pos[1])
+                    
                     case '+parry':
                         if random.random() < 0.25:
                             self.add_piece(destination.colour, destination.type, dest_x, dest_y)
@@ -194,6 +206,11 @@ class Board:
                     
                     if random.randint(1, 6) == 1:
                         self.remove_piece(dest_x, dest_y)
+                
+                case 'slippery floor':
+                    if random.randint(1, 3) == 1:
+                        pos = self.random_tile(1)[0]
+                        self.move_piece(piece.pos[0], piece.pos[1], pos[0], pos[1])
         
         if destination != None and destination.type == 'M' and piece.type != 'A':
             for i in self.game.BOMBEXPLOSIONRADIUS:

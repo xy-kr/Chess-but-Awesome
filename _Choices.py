@@ -50,7 +50,7 @@ CHOICES = [
         length = [3, 7]
     ),
     Choice(
-        name = 'Viking invasion',
+        name = 'Ragnarok',
         desc = f'Converts a random non-king piece into a viking.{NEWLINE}' \
                 'A viking can move either 1 or 2 spaces left, right, up or down, or 1 space diagonally.',
         length = 0
@@ -78,6 +78,11 @@ CHOICES = [
     Choice(
         name = 'Switcharoo',
         desc = 'Swaps two random pieces.',
+        length = 0
+    ),
+    Choice(
+        name = 'Mind Control',
+        desc = 'A random enemy piece is converted into your colour.',
         length = 0
     ),
     Choice(
@@ -191,6 +196,11 @@ CHOICES = [
         length = 0
     ),
     Choice(
+        name = 'Regicide',
+        desc = 'All queens are killed.',
+        length = 0
+    ),
+    Choice(
         name = '45-Degree Rotation',
         desc = 'All rooks are converted into bishops, and bishops into rooks.',
         length = 0
@@ -246,6 +256,21 @@ CHOICES = [
         length = [3, 8]
     ),
     Choice(
+        name = 'Necromancy',
+        desc = 'When you capture a piece, spawn a friendly pawn in an unoccupied space.',
+        length = [4, 8]
+    ),
+    Choice(
+        name = 'Vampirism',
+        desc = 'When you capture a piece, the capturing piece is converted into the captured piece\'s type.',
+        length = [5, 10]
+    ),
+    Choice(
+        name = 'Second Chance',
+        desc = 'When a piece is captured, 1/2 chance for it to respawn.',
+        length = [5, 10]
+    ),
+    Choice(
         name = 'Cardiac Arrest',
         desc = 'When a piece moves, 1/5 chance for it to die.',
         length = [3, 6]
@@ -279,6 +304,11 @@ CHOICES = [
         name = 'Russian Roulette',
         desc = f'When a piece is moved, 1/6 chance to convert it into a queen, and 1/6 chance for it to die.{NEWLINE}Affects kings.',
         length = [4, 7]
+    ),
+    Choice(
+        name = 'Slippery Floor',
+        desc = 'When a piece moves, 1/3 chance for it to move somewhere random.',
+        length = [3, 6]
     ),
     Choice(
         name = 'The Plague',
