@@ -6,7 +6,7 @@ from pathlib import Path
 
 import _Game as Game
 
-BOARD_SIZE = 600
+BOARD_SIZE = 800
 PIECE_SIZE = BOARD_SIZE / 8
 
 # Initialise variables and board
@@ -59,7 +59,12 @@ def board_thread():
                     
                     piece = board.get_tile(x, y)
                     
-                    
+                    if G.track_pos != None and y == G.track_pos:
+                        filename = image_path / 'railway.png'
+                        
+                        tile = py.image.load(filename)
+                        tile = py.transform.scale(tile, (PIECE_SIZE, PIECE_SIZE))
+                        screen.blit(tile, (x*PIECE_SIZE, y*PIECE_SIZE))
                     
                     if piece != None:
                         if piece.id in G.res5_pieces + G.hobbAsc_pieces:
@@ -87,7 +92,7 @@ def board_thread():
                         
                         piece = py.image.load(filename)
                         piece = py.transform.scale(piece, (PIECE_SIZE, PIECE_SIZE))
-                        screen.blit(piece, (x*PIECE_SIZE, y*PIECE_SIZE))    
+                        screen.blit(piece, (x*PIECE_SIZE, y*PIECE_SIZE))
             
             if G.horse_active:
                 filename = image_path / 'horse.png'
@@ -206,6 +211,12 @@ while not G.game_finished:
                                         for i in G.BOMBEXPLOSIONRADIUS:
                                             if 0 <= piece.pos[0] + i[0] < 8 and 0 <= piece.pos[1] + i[1] < 8:
                                                 board.remove_piece(piece.pos[0] + i[0], piece.pos[1] + i[1])      
+                    
+                    case 'the trolley problem':
+                        for x in range(8):
+                            board.remove_piece(x, G.track_pos)
+                        
+                        G.track_pos = None
                     
                     case 'resistance v':
                         G.res5_pieces = []
@@ -357,6 +368,9 @@ while not G.game_finished:
                 case 'bone meal':
                     pos = board.random_tile(1)[0]
                     board.add_piece('F', 'F', pos[0], pos[1])
+                
+                case 'the trolley problem':
+                    G.track_pos = random.randint(2, 5)                    
                 
                 case 'switcharoo':
                     pieces = board.random_tile(n=2, count=2)

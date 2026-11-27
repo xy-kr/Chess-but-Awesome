@@ -308,6 +308,7 @@ class Game:
         self.wwyw_tiles = []
         self.hotPotato_pieces = []
         self.horse_active = False
+        self.track_pos = None
         
         self.total_turns = 1
         self.turn = 1

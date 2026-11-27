@@ -76,6 +76,11 @@ CHOICES = [
         length = 0
     ),
     Choice(
+        name = 'The Trolley Problem',
+        desc = f'A row of tracks are placed horizontally on the board.{NEWLINE}When this choice expires, kill any pieces on the track.',
+        length = [3, 8]
+    ),
+    Choice(
         name = 'Switcharoo',
         desc = 'Swaps two random pieces.',
         length = 0
