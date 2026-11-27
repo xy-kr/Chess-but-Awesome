@@ -136,7 +136,7 @@ class Board:
                             self.game.hotPotato_pieces[self.game.hotPotato_pieces.index(destination.id)] = piece.id
                     
                     case 'level up':
-                        if destination.type in 'PNBRQK':
+                        if destination.type in 'PNBRQ':
                             piece.type = 'PNBRQQ'['PNBRQQ'.index(piece.type) + 1]
                     
                     case 'soul link':
@@ -153,9 +153,7 @@ class Board:
                     case 'kamikaze':
                         for i in self.game.BOMBEXPLOSIONRADIUS:
                             if 0 <= piece.pos[0] + i[0] < 8 and 0 <= piece.pos[1] + i[1] < 8:
-                                
-                                if i[0] != 0 or i[1] != 0:
-                                    self.remove_piece(piece.pos[0] + i[0], piece.pos[1] + i[1])
+                                self.remove_piece(piece.pos[0] + i[0], piece.pos[1] + i[1])
                     
                     case 'necromancy':
                         pos = self.random_tile(1)[0]
@@ -295,6 +293,8 @@ class Game:
         ]
         
         self.game_finished = False
+        self.old_board = None
+        self.old_choices = None
         
         self.CHOICES = Choices.choices()
         self.choice_frequency = 3
@@ -307,7 +307,6 @@ class Game:
         self.marked_pieces = []
         self.wwyw_tiles = []
         self.hotPotato_pieces = []
-        
         self.horse_active = False
         
         self.total_turns = 1

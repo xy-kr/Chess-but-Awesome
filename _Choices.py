@@ -47,7 +47,7 @@ CHOICES = [
     Choice(
         name = 'Curse of the Tower',
         desc = 'When a piece is captured, add 6 bombs to random unoccupied spaces.',
-        length = [3, 7]
+        length = [5, 10]
     ),
     Choice(
         name = 'Ragnarok',
@@ -57,7 +57,7 @@ CHOICES = [
     ),
     Choice(
         name = 'Schrodinger\'s Piece',
-        desc = f'Adds a knight to a random unoccupied space. This knight can be controlled by both teams.{NEWLINE}(Knight shown in red)',
+        desc = f'Adds a knight to a random unoccupied space. This knight can be controlled by both teams.',
         length = 0
     ),
     Choice(
@@ -93,17 +93,17 @@ CHOICES = [
     Choice(
         name = 'Wizard of Teleportation and Cruelty',
         desc = 'Every turn, a random piece is teleported to a random unoccupied tile.',
-        length = [5, 10]
+        length = [4, 7]
     ),
     Choice(
         name = 'Oestrogen',
         desc = 'Kings can move like queens.',
-        length = [3, 7]
+        length = [6, 12]
     ),
     Choice(
         name = 'Testostorone',
         desc = 'The other team\'s queen(s) can only move like kings.',
-        length = [3, 7]
+        length = [4, 10]
     ),
     Choice(
         name = 'Exercise',
@@ -113,7 +113,7 @@ CHOICES = [
     Choice(
         name = 'Resistance V',
         desc = f'Two random pieces on your team become immortal, excluding the king.{NEWLINE}(Immortality shown in green)',
-        length = [2, 4]
+        length = [5, 7]
     ),
     Choice(
         name = 'Standoff',
@@ -133,7 +133,7 @@ CHOICES = [
     Choice(
         name = 'Hobbit Slaughter',
         desc = 'Only pawns can be killed.',
-        length = [2, 4]
+        length = [3, 5]
     ),
     Choice(
         name = 'Hobbit Terror',
@@ -218,12 +218,12 @@ CHOICES = [
     Choice(
         name = 'No Cowards',
         desc = 'No moves that move pieces backwards.',
-        length = [3, 5]
+        length = [5, 8]
     ),
     Choice(
         name = 'Long Arms',
         desc = 'Pawns can capture directly left and right.',
-        length = [4, 7]
+        length = [5, 8]
     ),
     Choice(
         name = 'They Deserved It',
@@ -252,13 +252,13 @@ CHOICES = [
     ),
     Choice(
         name = 'Kamikaze',
-        desc = 'Any captured pieces explode. The capturing piece is immune to the explosion.',
-        length = [3, 8]
+        desc = 'Any captured pieces explode.',
+        length = [6, 8]
     ),
     Choice(
         name = 'Necromancy',
         desc = 'When you capture a piece, spawn a friendly pawn in an unoccupied space.',
-        length = [4, 8]
+        length = [6, 8]
     ),
     Choice(
         name = 'Vampirism',
@@ -389,6 +389,11 @@ CHOICES = [
         name = 'Evil and Intimidating Horse',
         desc = 'Adds a horse which blocks the board.',
         length = [3, 6]
+    ),
+    Choice(
+        name = 'Sniper Rifle',
+        desc = 'Pick an enemy\'s piece and kill it. Kings/queens excluded.',
+        length = 0
     ),
     Choice(
         name = 'THE MIMIC!!!!',

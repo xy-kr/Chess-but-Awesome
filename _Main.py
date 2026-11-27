@@ -1,12 +1,12 @@
 import threading, fnmatch, random, time, os
 import pygame as py
 
-from copy import copy
+from copy import copy, deepcopy
 from pathlib import Path
 
 import _Game as Game
 
-BOARD_SIZE = 800
+BOARD_SIZE = 600
 PIECE_SIZE = BOARD_SIZE / 8
 
 # Initialise variables and board
@@ -29,6 +29,7 @@ def board_thread():
     py.init()
     win = py.Window('Chess but Awesome', size=(BOARD_SIZE, BOARD_SIZE))
     win.always_on_top = True
+    win.resizable = False
     win.focus()
     screen = win.get_surface()
     
@@ -94,7 +95,14 @@ def board_thread():
                 tile = py.image.load(filename)
                 tile = py.transform.scale(tile, (BOARD_SIZE, BOARD_SIZE))
                 screen.blit(tile, (0, 0))
+            
+            if picking_choice:
+                filename = image_path / 'pick_choice.png'
                 
+                tile = py.image.load(filename)
+                tile = py.transform.scale(tile, (BOARD_SIZE, BOARD_SIZE))
+                screen.blit(tile, (0, 0))
+            
             win.flip()
     
     except KeyboardInterrupt:
@@ -103,6 +111,8 @@ def board_thread():
     
     py.quit()
     return 0
+
+picking_choice = False
 
 show_board = threading.Thread(target=board_thread)
 show_board.start()
@@ -133,11 +143,18 @@ while not G.game_finished:
             clear()
             
             print(board.display_board())
-            
             print(f'\nIt is {"WHITE" if G.turn == 1 else "BLACK"}\'s turn.')
             
             choice = input('Enter the coordinate of the piece you would like to move:\n>> ').upper()
             user_input = list(choice)
+            
+            if choice == 'UNDO':
+                if G.old_board != None and G.active_choices != None:
+                    board.board = deepcopy(G.old_board)
+                    G.active_choices = deepcopy(G.old_choices)
+                    
+                    G.total_turns -= 1
+                    G.turn = (G.total_turns % 2)
             
             if len(user_input) == 2 and user_input[0] in 'ABCDEFGH' and user_input[1] in '12345678':
                 user_input[0] = G.NUMERICCOORDS[user_input[0]]
@@ -154,7 +171,6 @@ while not G.game_finished:
                             clear()
                             
                             print(board.display_board())
-                            
                             print(f'\nIt is {"WHITE" if G.turn == 1 else "BLACK"}\'s turn.')
                             
                             user_input = list(input(f'\nSelected the {G.PIECES[selected_piece.type].upper()} at {choice}.\nEnter the coordinate of the piece you would like to move:\n>> ').upper())
@@ -166,6 +182,9 @@ while not G.game_finished:
                                 user_input[1] = 8 - int(user_input[1])
                                 
                                 dest_coords = user_input
+                                
+                                G.old_board = deepcopy(board.board)
+                                G.old_choices = deepcopy(G.active_choices)
                                 
                                 board.move_piece(start_coords[0], start_coords[1], dest_coords[0], dest_coords[1])
                                 moved = True
@@ -229,6 +248,8 @@ while not G.game_finished:
         
         # Choice time!!
         if G.total_turns % G.choice_frequency == 0 and G.choice_cooldown == 0:
+            picking_choice = True
+            
             choices = []
             
             for i in range(G.choice_count):
@@ -629,6 +650,25 @@ while not G.game_finished:
                 
                 case 'evil and intimidating horse':
                     G.horse_active = True
+                
+                case 'sniper rifle':
+                    while True:
+                        clear()
+                        choice = input(f'{"WHITE" if G.turn == 1 else "BLACK"}, Enter the coordinate of the piece you would like to kill:\n>> ').upper()
+                        user_input = list(choice)
+                        
+                        if len(user_input) == 2 and user_input[0] in 'ABCDEFGH' and user_input[1] in '12345678':
+                            user_input[0] = G.NUMERICCOORDS[user_input[0]]
+                            user_input[1] = 8 - int(user_input[1])
+                            
+                            piece = board.get_tile(user_input[0], user_input[1])
+                            
+                            if piece != None:
+                                if piece.colour in [('B' if G.turn == 1 else 'W'), 'WB'] and piece.type in 'PNBR':
+                                    board.remove_piece(user_input[0], user_input[1])
+                                    break
+            
+            picking_choice = False
         
         # Special piece code
         moved_rats = []
